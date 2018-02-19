@@ -1,0 +1,13 @@
+<p><input type="file" (change)="onFileChanged($event)"></p>
+
+<p style="margin:50px auto 50px ">
+	<img [src]="profileUrl" style="width:200px;height: 200px;border-radius: 50%;">
+</p>
+
+<button type="button" (click)="uploadFile()">Upload file</button>
+
+<!-- <input 
+  style="display: none" 
+  type="file" (change)="onFileChanged($event)" 
+  #fileInput>
+<button (click)="fileInput.click()">Select File</button> -->
