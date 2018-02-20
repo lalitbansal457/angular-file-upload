@@ -10,10 +10,10 @@ export class FileUpload {
 	profileUrl:string = "./assets/images/no-photo.jpg";
 
 	constructor(private http:HttpClient) {
-
 	}
 
 	onFileChanged(event) {
+		// preview file in browser
 	  	this.selectedFile = event.target.files[0];
 	  	console.log(this.selectedFile);
 
@@ -33,27 +33,26 @@ export class FileUpload {
 		    .subscribe();
 	}*/
 
-	// as formData
+	// As formData
 	uploadFile() {
-		const uploadData = new FormData();
 
-	  	uploadData.append('myFile', this.selectedFile, this.selectedFile.name);
+		var fileSize = (this.selectedFile.size/1024)/1024 ; // get file size in MB
+		console.log(fileSize);
+		if(fileSize > 1) {
+			console.log("file Size is too large")
+		} else {
+			const uploadData = new FormData();
 
-	  	this.http.post('my-backend.com/file-upload', uploadData, {reportProgress: true,
-    observe: 'events'}).subscribe(event => {
-    	if(event.type == HttpEventType.UploadProgress) {
-    		console.log(Math.round(event['loaded']/event['total']* 100)  + '%' );
-    	} else if (event.type == HttpEventType.Response) {
-    		console.log(event);
+		  	uploadData.append('myFile', this.selectedFile, this.selectedFile.name);
+
+			this.http.post('my-backend.com/file-upload', uploadData, {reportProgress: true,
+		    observe: 'events'}).subscribe(event => {
+
+		    	if(event.type == HttpEventType.UploadProgress) {
+		    		console.log(Math.round(event['loaded']/event['total']* 100)  + '%' );
+		    	} else if (event.type == HttpEventType.Response) {
+		    		console.log(event);
+		    	}
+			})
     	}
-    	
-
-    });
- 	}
-	
-
-	
-
-
-
-}
+	}
